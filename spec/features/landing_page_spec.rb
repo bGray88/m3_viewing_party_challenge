@@ -23,7 +23,7 @@ RSpec.describe "Landing Page" do
   end
 
   it "has a link to 'Log In' page" do
-    click_button "Log In"
+    click_link "Log In"
 
     expect(current_path).to eq(login_path)
 
