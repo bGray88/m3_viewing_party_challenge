@@ -23,6 +23,7 @@ class UsersController < ApplicationController
   def create
     user = User.create(user_params)
     if user.save && user_params[:password] == user_params[:password_confirmation]
+      flash[:success] = "Welcome, #{user.name}!"
       redirect_to user_path(user)
     else
       flash[:error] = user.errors.full_messages.to_sentence
