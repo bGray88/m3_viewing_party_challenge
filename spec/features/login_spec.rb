@@ -24,7 +24,9 @@ RSpec.describe "User login form" do
     fill_in :email, with: @username
     fill_in :password, with: @password
 
-    click_on "Log In"
+    within('#login') do
+      click_on "Log In"
+    end
 
     expect(page).to have_content("#{@fullname}'s Dashboard")
   end
@@ -39,7 +41,9 @@ RSpec.describe "User login form" do
     fill_in :email, with: @username
     fill_in :password, with: password
 
-    click_on "Log In"
+    within('#login') do
+      click_on "Log In"
+    end
 
     expect(current_path).to eq(login_path)
     expect(page).to have_content("Sorry, your credentials are bad")
