@@ -1,28 +1,43 @@
 require 'rails_helper'
 
-RSpec.describe "User Registration" do
-  it 'can create a user with a name and unique email' do
+RSpec.describe "User registration form" do
+  it "creates new user" do
     visit register_path
-
-    fill_in :user_name, with: 'User One'
-    fill_in :user_email, with:'user1@example.com'
-    click_button 'Create New User'
-
-    expect(current_path).to eq(user_path(User.last.id))
-    expect(page).to have_content("User One's Dashboard")
-  end 
-
-  it 'does not create a user if email isnt unique' do 
-    User.create(name: 'User One', email: 'notunique@example.com')
-
-    visit register_path
-    
-    fill_in :user_name, with: 'User Two'
-    fill_in :user_email, with:'notunique@example.com'
-    click_button 'Create New User'
 
     expect(current_path).to eq(register_path)
-    expect(page).to have_content("Email has already been taken")
-    
+
+    fullname  = "Harvey Weinstein"
+    username  = "funbucket13@gmail.com"
+    password  = "test"
+
+    fill_in :user_name, with: fullname
+    fill_in :user_email, with: username
+    fill_in :user_password, with: password
+    fill_in :user_password_confirmation, with: password
+
+    click_on "Create New User"
+
+    expect(User.last).to_not have_attribute(:password)
+    expect(page).to have_content("#{fullname}'s Dashboard")
+  end
+
+  it "won't create user with mismatching passwords" do
+    visit register_path
+
+    expect(current_path).to eq(register_path)
+
+    fullname  = "Harvey Weinstein"
+    username  = "funbucket13@gmail.com"
+    password  = "test"
+
+    fill_in :user_name, with: fullname
+    fill_in :user_email, with: username
+    fill_in :user_password, with: password
+    fill_in :user_password_confirmation, with: "tets"
+
+    click_on "Create New User"
+
+    expect(current_path).to eq(register_path)
+    expect(page).to have_content("Password confirmation doesn't match")
   end
 end
