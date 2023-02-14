@@ -7,18 +7,18 @@ Rails.application.routes.draw do
   get '/login', to: 'users#login_form'
   post '/login', to: 'users#login_user'
   post '/logout', to: 'users#logout_user'
-  get '/users/:id/movies', to: 'movies#index', as: 'movies'
-  get '/users/:user_id/movies/:id', to: 'movies#show', as: 'movie'
-
+  
   namespace :admin do
-    get '/dashboard', to: 'dashboard#index'
+    get '/dashboard', to: 'dashboard#index', as: 'user'
   end
   namespace :manager do
-    get '/dashboard', to: 'dashboard#index'
+    get '/dashboard', to: 'dashboard#index', as: 'user'
   end
-  get '/dashboard', to: 'dashboard#index'
   
-  resources :users, only: [:show, :create] do
-    resources :viewing_parties, only: [:new, :create]
-  end
+  get '/dashboard', to: 'users#show', as: 'user'
+  get '/dashboard/movies', to: 'movies#index', as: 'movies'
+  get '/dashboard/movies/:id', to: 'movies#show', as: 'movie'
+  post '/users', to: 'users#create'
+
+  resources :viewing_parties, only: [:new, :create]
 end

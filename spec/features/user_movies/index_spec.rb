@@ -10,11 +10,16 @@ RSpec.describe "Movies Index Page" do
   end
 
   it "shows all movies" do
-    visit user_path(@user1)
+    visit login_path
+
+    fill_in :email, with: @user1.email
+    fill_in :password, with: @user1.password
+
+    click_button("Log In")
 
     click_button "Find Top Rated Movies"
 
-    expect(current_path).to eq(movies_path(@user1))
+    expect(current_path).to eq(movies_path)
 
     expect(page).to have_content("Top Rated Movies")
     Movie.all.each do |movie|

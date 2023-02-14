@@ -18,14 +18,14 @@ RSpec.describe "Admin login form" do
     end
 
     expect(page).to have_content("Welcome, #{@admin.name}!")
-    expect(current_path).to eq(admin_dashboard_path)
+    expect(current_path).to eq(admin_user_path)
   end
 
   describe "log in as default user" do
     it 'does not allow default user to see admin dashboard index' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
-      visit admin_dashboard_path
+      visit admin_user_path
 
       expect(page).to have_content("The page you were looking for doesn't exist.")
     end

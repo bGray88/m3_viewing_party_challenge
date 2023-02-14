@@ -18,7 +18,8 @@ RSpec.describe "User registration form" do
     click_on "Create New User"
 
     expect(User.last).to_not have_attribute(:password)
-    expect(page).to have_content("#{fullname}'s Dashboard")
+    expect(current_path).to eq(login_path)
+    expect(page).to have_content("Please Log In, #{fullname}")
   end
 
   it "won't create user with mismatching passwords" do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "User login form" do
+RSpec.describe "User login" do
   before(:each) do
     @user1 = create(:user)
     @user2 = create(:user)
@@ -15,7 +15,7 @@ RSpec.describe "User login form" do
     fill_in :user_email, with: @username
     fill_in :user_password, with: @password
     fill_in :user_password_confirmation, with: @password
-
+    
     click_on "Create New User"
   end
 
