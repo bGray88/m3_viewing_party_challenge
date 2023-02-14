@@ -27,7 +27,7 @@ RSpec.describe "Admin login form" do
 
       visit admin_user_path
 
-      expect(page).to have_content("The page you were looking for doesn't exist.")
+      expect(page).to have_content("Not authorized to access requested")
     end
   end
 end
