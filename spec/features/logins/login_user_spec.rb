@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "User login form" do
   before(:each) do
+    @user1 = create(:user)
+    @user2 = create(:user)
+
     visit register_path
 
     @fullname  = "Harvey Weinstein"
@@ -47,5 +50,23 @@ RSpec.describe "User login form" do
 
     expect(current_path).to eq(login_path)
     expect(page).to have_content("Sorry, your credentials are bad")
+  end
+
+  it 'lists existing user emails if logged in' do
+    visit login_path
+
+    fill_in :email, with: @username
+    fill_in :password, with: @password
+
+    within('#login') do
+      click_on "Log In"
+    end
+
+    visit root_path
+
+    expect(page).to have_content("Existing Users:")
+
+    expect(page).to have_content(@user1.email)
+    expect(page).to have_content(@user2.email)
   end
 end

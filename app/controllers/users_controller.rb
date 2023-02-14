@@ -24,6 +24,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout_user
+    @_current_user = session[:user_id] = nil
+    flash[:success] = "Thanks for stopping by!"
+    redirect_to login_path
+  end
+
   def create
     user = User.create(user_params)
     if user.save

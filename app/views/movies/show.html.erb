@@ -3,3 +3,5 @@
 <p>Description: <%= @movie.description %></p>
 
 <p>Rating: <%= @movie.rating %>/10</p>
+
+<%= button_to "Create Viewing Party", new_user_viewing_party_path, params: { movie_id: @movie.id }, method: :get %>
