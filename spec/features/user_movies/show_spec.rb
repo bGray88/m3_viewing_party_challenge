@@ -10,11 +10,16 @@ RSpec.describe "Movies Index Page" do
   end
 
   it "shows all movies" do
-    visit user_path(@user1)
+    visit login_path
+
+    fill_in :email, with: @user1.email
+    fill_in :password, with: @user1.password
+
+    click_button("Log In")
 
     click_button "Find Top Rated Movies"
 
-    expect(current_path).to eq(movies_path(@user1))
+    expect(current_path).to eq(movies_path)
 
     expect(page).to have_content("Top Rated Movies")
 
@@ -22,7 +27,7 @@ RSpec.describe "Movies Index Page" do
 
     click_link(movie1.title)
 
-    expect(current_path).to eq(movie_path(@user1, movie1))
+    expect(current_path).to eq(movie_path(movie1))
 
     expect(page).to have_content(movie1.title)
     expect(page).to have_content(movie1.description)
@@ -31,13 +36,13 @@ RSpec.describe "Movies Index Page" do
 
   it 'denies access without login' do
     movie1 = Movie.first
-    visit movie_path(@user1, movie1)
+    visit movie_path(movie1)
 
-    expect(current_path).to eq(movie_path(@user1, movie1))
+    expect(current_path).to eq(movie_path(movie1))
 
     click_button("Create Viewing Party")
 
-    expect(current_path).to eq(movie_path(@user1, movie1))
+    expect(current_path).to eq(movie_path(movie1))
     expect(page).to have_content("Login necessary")
   end
 end

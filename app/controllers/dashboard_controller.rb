@@ -6,7 +6,7 @@ class DashboardController < ApplicationController
   private
 
   def validate_user
-    unless session[:user_id]
+    unless current_user
       flash[:error] = "Login necessary"
       redirect_to root_path
     end

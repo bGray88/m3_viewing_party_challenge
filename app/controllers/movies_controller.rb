@@ -9,12 +9,12 @@ class MoviesController < ApplicationController
   private
 
   def find_user_and_movies
-    @user = User.find(params[:id])
+    @user = current_user
     @movies = Movie.all
   end
 
   def find_user_and_movie
-    @user = User.find(params[:user_id])
+    @user = current_user
     @movie = Movie.find(params[:id])
   end
 end

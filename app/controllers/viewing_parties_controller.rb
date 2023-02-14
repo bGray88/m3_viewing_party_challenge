@@ -6,9 +6,9 @@ class ViewingPartiesController < ApplicationController
   private
 
   def validate_user
-    unless session[:user_id]
+    unless current_user
       flash[:error] = "Login necessary"
-      redirect_to movie_path(params[:user_id], params[:movie_id])
+      redirect_to movie_path(params[:movie_id])
     end
   end
 end
