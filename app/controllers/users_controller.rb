@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       redirect_to root_path
     end
   end
-
+  
   def format_email
     params[:email]&.downcase!
   end
