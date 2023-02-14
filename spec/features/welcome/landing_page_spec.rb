@@ -33,12 +33,17 @@ RSpec.describe "Landing Page" do
     expect(current_path).to eq(root_path)
   end
 
-  it "lists out existing users" do
-    expect(page).to have_content("Existing Users:")
+  it "does not list out existing users" do
+    expect(page).to_not have_content("Existing Users:")
 
-    within(".existing-users") do
-      expect(page).to have_content(@user1.email)
-      expect(page).to have_content(@user2.email)
-    end
+    expect(page).to_not have_content(@user1.email)
+    expect(page).to_not have_content(@user2.email)
+  end
+
+  it 'denies access without login' do
+    click_link "Dashboard"
+
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content("Login necessary")
   end
 end

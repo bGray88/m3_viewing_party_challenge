@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/register', to: 'users#new'
   get '/login', to: 'users#login_form'
   post '/login', to: 'users#login_user'
+  post '/logout', to: 'users#logout_user'
   get '/users/:id/movies', to: 'movies#index', as: 'movies'
   get '/users/:user_id/movies/:id', to: 'movies#show', as: 'movie'
 
@@ -15,6 +16,9 @@ Rails.application.routes.draw do
   namespace :manager do
     get '/dashboard', to: 'dashboard#index'
   end
+  get '/dashboard', to: 'dashboard#index'
   
-  resources :users, only: [:show, :create]
+  resources :users, only: [:show, :create] do
+    resources :viewing_parties, only: [:new, :create]
+  end
 end
